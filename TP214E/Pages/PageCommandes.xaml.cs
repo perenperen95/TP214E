@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TP214E.Data;
 
 namespace TP214E.Pages
 {
@@ -18,7 +19,7 @@ namespace TP214E.Pages
     /// </summary>
     public partial class PageCommandes : Page
     {
-        public PageCommandes()
+        public PageCommandes(DAL dal)
         {
             InitializeComponent();
         }
