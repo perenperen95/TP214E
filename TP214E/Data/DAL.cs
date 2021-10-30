@@ -16,21 +16,6 @@ namespace TP214E.Data
             mongoDBClient = OuvrirConnexion();
         }
 
-        public List<Aliment> ALiments()
-        {
-            var aliments = new List<Aliment>();
-            try
-            {
-                IMongoDatabase db = mongoDBClient.GetDatabase("TP2DB");
-                aliments = db.GetCollection<Aliment>("Aliments").Aggregate().ToList();
-            }catch (Exception ex)
-            {
-                MessageBox.Show("Impossible de se connecter à la base de données " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-
-            }
-            return aliments;
-        }
-
         private MongoClient OuvrirConnexion()
         {
             MongoClient dbClient = null;

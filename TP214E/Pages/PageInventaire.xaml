@@ -8,7 +8,41 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Inventaire">
 
-    <Grid>
-        
+    <Grid x:Name="GrilleInventaire">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Buttons" Grid.Column="0" Height="449" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <StackPanel>
+                <Button x:Name="btnAcheterAliment" Content="Acheter des aliments" Click="btnAcheterAliment_Click"/>
+                <Button Content="Button"/>
+            </StackPanel>
+        </GroupBox>
+
+        <ListView Grid.Column="1" ItemsSource="{Binding aliments}">
+
+            <ListView.View>
+
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Informations des aliments">
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Nom}" Header="Nom" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Quantie}" Header="Quantite" Width="100"/>
+                    
+                    <GridViewColumn DisplayMemberBinding="{Binding Unite}" Header="Unite" Width="100"/>
+                    
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ExpireLe}" Header="Date de péremption" Width="200"/>
+                </GridView>
+
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
 </Page>
