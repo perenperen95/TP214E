@@ -22,10 +22,10 @@ namespace TP214E.Pages
     {
         private static readonly Regex _regex = new Regex("^[0-9]+$");
 
-        DAL _dal;
+        AlimentDAL _dal;
         Aliment _aliment;
 
-        public PageAliment(DAL dal, Aliment aliment)
+        public PageAliment(AlimentDAL dal, Aliment aliment)
         {
             _dal = dal;
             _aliment = aliment;
@@ -65,12 +65,13 @@ namespace TP214E.Pages
 
         private void CreerAliment(Aliment aliment)
         {
-
+            // utiliser le DAL
+            FermerPage(null, null);
         }
 
         private void ModifierAliment(Aliment aliment)
         {
-
+            // utiliser le DAL
         }
 
         private Aliment ObtenirInformationAliment()

@@ -6,9 +6,9 @@ using System.Windows;
 
 namespace TP214E.Data
 {
-    class AlimentDAL: DAL
+    public class AlimentDAL: DAL
     {
-        AlimentDAL() : base()
+        public AlimentDAL() : base()
         {
 
         }

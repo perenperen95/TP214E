@@ -21,11 +21,12 @@ namespace TP214E
     public partial class PageInventaire : Page
     {
         private List<Aliment> aliments;
-        DAL _dal;
-        public PageInventaire(DAL dal)
+        AlimentDAL _dal;
+        public PageInventaire()
         {
+            _dal = new AlimentDAL();
             InitializeComponent();
-            aliments = dal.ALiments();
+            aliments = _dal.ALiments();
 
             DataContext = this;
         }
@@ -38,11 +39,11 @@ namespace TP214E
 
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
-            var aliment = sender as ListViewItem;
-            if (aliment != null && aliment.IsSelected)
+            ListViewItem elemetDeLaliste = sender as ListViewItem;
+            if (elemetDeLaliste != null && elemetDeLaliste.IsSelected)
             {
-                Aliment al = new Aliment();
-                PageAliment frmAliment = new PageAliment(_dal, al);
+                Aliment alimentSelectionne = (Aliment)elemetDeLaliste.DataContext;
+                PageAliment frmAliment = new PageAliment(_dal, alimentSelectionne);
 
                 this.NavigationService.Navigate(frmAliment);
             }
@@ -50,6 +51,8 @@ namespace TP214E
 
         private void btnAcheterAliment_Click(object sender, RoutedEventArgs e)
         {
+            PageAliment frmAliment = new PageAliment(_dal, null);
+            this.NavigationService.Navigate(frmAliment);
         }
     }
 }
