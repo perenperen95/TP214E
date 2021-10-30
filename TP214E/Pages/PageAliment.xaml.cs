@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TP214E.Data;
+using System.Text.RegularExpressions;
 
 namespace TP214E.Pages
 {
@@ -19,6 +20,8 @@ namespace TP214E.Pages
     /// </summary>
     public partial class PageAliment : Page
     {
+        private static readonly Regex _regex = new Regex("^[0-9]+$");
+
         DAL _dal;
         Aliment _aliment;
 
@@ -40,37 +43,50 @@ namespace TP214E.Pages
 
         public void EnvoyerInformationsAliment(object sender, RoutedEventArgs e)
         {
-            if (VerificationCasEnvoie())
+            if (VerifierChampsFormulaire())
             {
-                CreerAliment();
+                Aliment aliment = ObtenirInformationAliment();
+                if (VerificationCasEnvoie())
+                {
+                    CreerAliment(aliment);
+                }
+                else
+                {
+                    ModifierAliment(aliment);
+                }
             }
-            else
-            {
-                ModifierAliment();
-            }
+            
         }
 
-        public bool VerificationCasEnvoie()
+        private bool VerificationCasEnvoie()
         {
-            return true;
+            return (_aliment == null);
         }
 
-        public void CreerAliment()
+        private void CreerAliment(Aliment aliment)
         {
 
         }
 
-        public void ModifierAliment()
+        private void ModifierAliment(Aliment aliment)
         {
 
         }
 
-        private void btnEnvoyerInfo_Click(object sender, RoutedEventArgs e)
+        private Aliment ObtenirInformationAliment()
         {
+            Aliment nouvelAliment = new Aliment();
 
+            nouvelAliment.Id = _aliment.Id;
+            nouvelAliment.Nom = txtNom.Text;
+            nouvelAliment.Quantite = Int32.Parse(txtQuatite.Text);
+            nouvelAliment.Unite = txtUnite.Text;
+            nouvelAliment.ExpireLe = DateTime.Parse(dpkDate.Text);
+
+            return nouvelAliment;
         }
 
-        public void RemplissageFormulaire()
+        private void RemplissageFormulaire()
         {
             if (_aliment != null)
             {
@@ -80,5 +96,94 @@ namespace TP214E.Pages
                 txtUnite.Text = _aliment.Unite;
             }
         }
+
+        public bool VerifierChampsFormulaire()
+        {
+            return (VerificationChampNom() && VerificationChampQuantite() &&
+                VerificationChampUnite() && VerificationChampDate());
+        }
+
+        public static bool SontDesNombre(string text)
+        {
+            return _regex.IsMatch(text);
+        }
+
+        public void PreviewQuatiteTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = SontDesNombre(e.Text);
+        }
+
+        private bool VerificationChampDate()
+        {
+            if (dpkDate.Text != "")
+            {
+                if (DateTime.Parse(dpkDate.Text) > DateTime.Today)
+                {
+                    erreurDate.Text = "";
+                    return true;
+                }
+                else
+                {
+                    erreurDate.Text = "La date que vous avez entré est invalide.";
+                    return false;
+                }
+            }
+            else
+            {
+                erreurDate.Text = "Ce champ est vide.";
+                return false;
+            }
+        }
+
+        public bool VerificationChampUnite()
+        {
+            if (txtUnite.Text != "")
+            {
+                erreurUnite.Text = "";
+                return true;
+            }
+            else
+            {
+                erreurUnite.Text = "Ce champ est vide.";
+                return false;
+            }
+        }
+
+        public bool VerificationChampQuantite()
+        {
+            if (txtQuatite.Text != "")
+            {
+                if (SontDesNombre(txtQuatite.Text))
+                {
+                    erreurQuantite.Text = "";
+                    return true;
+                }
+                else
+                {
+                    erreurQuantite.Text = "Ce champ doit comporter que des nombres.";
+                    return false;
+                }
+            }
+            else
+            {
+                erreurQuantite.Text = "Ce champ est vide.";
+                return false;
+            }
+        }
+
+        public bool VerificationChampNom()
+        {
+            if (txtNom.Text != "")
+            {
+                erreurNom.Text = "";
+                return true;
+            }
+            else
+            {
+                erreurNom.Text = "Ce champ est vide.";
+                return false;
+            }
+        }
     }
+    
 }
