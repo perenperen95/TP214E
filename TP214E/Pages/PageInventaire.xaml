@@ -6,21 +6,22 @@
       xmlns:local="clr-namespace:TP214E"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Inventaire">
+      Title="Inventaire"
+      Loaded="AuChargement">
 
-    <Grid x:Name="GrilleInventaire">
+    <Grid x:Name="GrilleInventaire" Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="Buttons" Grid.Column="0" Height="449" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <GroupBox x:Name="gboBoutons" Header="Inventaire" Grid.Column="0" Height="449" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="#FF00FF23">
             <StackPanel>
                 <Button x:Name="btnAcheterAliment" Content="Acheter des aliments" Click="btnAcheterAliment_Click"/>
                 <Button Content="Button"/>
             </StackPanel>
         </GroupBox>
 
-        <ListView Grid.Column="1" ItemsSource="{Binding aliments}">
+        <ListView x:Name="lvAliments" Grid.Column="1" ItemsSource="{Binding aliments}" Background="#FF464646">
 
             <ListView.View>
 
@@ -30,7 +31,7 @@
 
                     <GridViewColumn DisplayMemberBinding="{Binding Nom}" Header="Nom" Width="100"/>
 
-                    <GridViewColumn DisplayMemberBinding="{Binding Quantie}" Header="Quantite" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Quantite}" Header="Quantite" Width="100"/>
                     
                     <GridViewColumn DisplayMemberBinding="{Binding Unite}" Header="Unite" Width="100"/>
                     

@@ -10,7 +10,12 @@ namespace TP214E.Data
 {
     public class DAL
     {
+        
+        private const string URL_DE_LA_BD = "mongodb://localhost:27017/TP2DB";
+        public const string NOM_DE_LA_BD = "TP2DB";
+
         public MongoClient mongoDBClient;
+
         public DAL()
         {
             mongoDBClient = OuvrirConnexion();
@@ -20,7 +25,7 @@ namespace TP214E.Data
         {
             MongoClient dbClient = null;
             try{
-                dbClient = new MongoClient("mongodb://localhost:27017/TP2DB");
+                dbClient = new MongoClient(URL_DE_LA_BD);
             }catch (Exception ex)
             {
                 MessageBox.Show("Impossible de se connecter à la base de données " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TP214E.Data;
 using System.Text.RegularExpressions;
+using MongoDB.Bson;
 
 namespace TP214E.Pages
 {
@@ -52,6 +53,7 @@ namespace TP214E.Pages
                 }
                 else
                 {
+                    aliment.Id = ObjectId.Parse(lblId.Text);
                     ModifierAliment(aliment);
                 }
             }
@@ -65,24 +67,20 @@ namespace TP214E.Pages
 
         private void CreerAliment(Aliment aliment)
         {
-            // utiliser le DAL
+            _dal.CreerAliment(aliment);
             FermerPage(null, null);
         }
 
         private void ModifierAliment(Aliment aliment)
         {
-            // utiliser le DAL
+            _dal.ModifierAliment(aliment);
+            FermerPage(null, null);
         }
 
         private Aliment ObtenirInformationAliment()
         {
-            Aliment nouvelAliment = new Aliment();
-
-            nouvelAliment.Id = _aliment.Id;
-            nouvelAliment.Nom = txtNom.Text;
-            nouvelAliment.Quantite = Int32.Parse(txtQuatite.Text);
-            nouvelAliment.Unite = txtUnite.Text;
-            nouvelAliment.ExpireLe = DateTime.Parse(dpkDate.Text);
+            Aliment nouvelAliment = new Aliment(txtNom.Text, Int32.Parse(txtQuatite.Text),
+                txtUnite.Text, DateTime.Parse(dpkDate.Text));
 
             return nouvelAliment;
         }
@@ -95,6 +93,7 @@ namespace TP214E.Pages
                 txtNom.Text = _aliment.Nom;
                 txtQuatite.Text = _aliment.Quantite.ToString();
                 txtUnite.Text = _aliment.Unite;
+                dpkDate.Text = _aliment.ExpireLe.ToString();
             }
         }
 
@@ -106,17 +105,18 @@ namespace TP214E.Pages
 
         public static bool SontDesNombre(string text)
         {
-            return _regex.IsMatch(text);
+            bool estUnNombre = _regex.IsMatch(text);
+            return estUnNombre;
         }
 
         public void PreviewQuatiteTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = SontDesNombre(e.Text);
+            e.Handled = !SontDesNombre(e.Text);
         }
 
         private bool VerificationChampDate()
         {
-            if (dpkDate.Text != "")
+            if (VerifierSiChaineEstVide(dpkDate.Text))
             {
                 if (DateTime.Parse(dpkDate.Text) > DateTime.Today)
                 {
@@ -138,7 +138,7 @@ namespace TP214E.Pages
 
         public bool VerificationChampUnite()
         {
-            if (txtUnite.Text != "")
+            if (VerifierSiChaineEstVide(txtUnite.Text))
             {
                 erreurUnite.Text = "";
                 return true;
@@ -152,7 +152,7 @@ namespace TP214E.Pages
 
         public bool VerificationChampQuantite()
         {
-            if (txtQuatite.Text != "")
+            if (VerifierSiChaineEstVide(txtQuatite.Text))
             {
                 if (SontDesNombre(txtQuatite.Text))
                 {
@@ -174,7 +174,7 @@ namespace TP214E.Pages
 
         public bool VerificationChampNom()
         {
-            if (txtNom.Text != "")
+            if (VerifierSiChaineEstVide(txtNom.Text))
             {
                 erreurNom.Text = "";
                 return true;
@@ -184,6 +184,11 @@ namespace TP214E.Pages
                 erreurNom.Text = "Ce champ est vide.";
                 return false;
             }
+        }
+
+        private bool VerifierSiChaineEstVide(string text)
+        {
+            return (text != "");
         }
     }
     

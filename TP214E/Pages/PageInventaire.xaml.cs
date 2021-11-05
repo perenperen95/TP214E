@@ -26,9 +26,18 @@ namespace TP214E
         {
             _dal = new AlimentDAL();
             InitializeComponent();
-            aliments = _dal.ALiments();
+        }
 
+        private void ChargerLesAliments()
+        {
+            aliments = _dal.RechercherTousLesAliments();
+            lvAliments.ItemsSource = aliments;
             DataContext = this;
+        }
+
+        public void AuChargement(object sender, RoutedEventArgs e)
+        {
+            ChargerLesAliments();
         }
 
         private void OnFermerModaleClick(object sender, RoutedEventArgs e)
