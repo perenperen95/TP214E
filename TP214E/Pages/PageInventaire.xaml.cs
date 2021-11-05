@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using TP214E.Data;
 using TP214E.Pages;
 
+
 namespace TP214E
 {
     /// <summary>
@@ -40,12 +41,6 @@ namespace TP214E
             ChargerLesAliments();
         }
 
-        private void OnFermerModaleClick(object sender, RoutedEventArgs e)
-        {
-            //modale.EstOuverte = false;
-            //ne fonctionne pas pour l'instant: test d'une autre solution
-        }
-
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             ListViewItem elemetDeLaliste = sender as ListViewItem;
@@ -58,10 +53,47 @@ namespace TP214E
             }
         }
 
+        public void SupprimerAliment(Aliment alimentASupprimer)
+        {
+            bool requeteReussi = _dal.SupprimerAliment(alimentASupprimer);
+            VerifierReussiteRequete(requeteReussi);
+        }
+
+        public void VerifierReussiteRequete(bool requeteRéussi)
+        {
+            if (requeteRéussi)
+            {
+                ChargerLesAliments();
+            }
+            else {
+                lblErreur.Text = "Il y a eu une erreur lors de la suppression";
+            }
+        }
+
         private void btnAcheterAliment_Click(object sender, RoutedEventArgs e)
         {
             PageAliment frmAliment = new PageAliment(_dal, null);
             this.NavigationService.Navigate(frmAliment);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var elementDuMenu = (MenuItem) e.OriginalSource;
+            Aliment alimentASupprimer = (Aliment) elementDuMenu.CommandParameter;
+            SupprimerAliment(alimentASupprimer);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            RetournerAuMenu();
+        }
+
+        private void RetournerAuMenu()
+        {
+            if (this.NavigationService.CanGoBack)
+            {
+                this.NavigationService.GoBack();
+            }
         }
     }
 }

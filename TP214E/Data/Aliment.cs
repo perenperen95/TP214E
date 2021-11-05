@@ -7,7 +7,7 @@ namespace TP214E.Data
 {
     public class Aliment
     {
-        private string _id;
+        private ObjectId _id;
         private string _nom;
         private int _quantite;
         private string _unite;
@@ -30,11 +30,26 @@ namespace TP214E.Data
             ExpireLe = expireLe;
         }
 
-        public ObjectId Id { get; set; }
-        public string Nom { get; set; }
-        public int Quantite { get; set; }
-        public string Unite { get; set; }
-        public DateTime ExpireLe { get; set; }
+        public ObjectId Id {
+            get { return _id; }
+            set { _id = value; }
+        }
+        public string Nom {
+            get { return _nom; }
+            set { _nom = value; }
+        }
+        public int Quantite {
+            get { return _quantite; }
+            set { _quantite = value; }
+        }
+        public string Unite {
+            get { return _unite; }
+            set { _unite = value; }
+        }
+        public DateTime ExpireLe {
+            get { return _expireLe; }
+            set { _expireLe = value; }
+        }
 
     }
 }

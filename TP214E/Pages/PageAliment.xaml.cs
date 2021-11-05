@@ -21,7 +21,7 @@ namespace TP214E.Pages
     /// </summary>
     public partial class PageAliment : Page
     {
-        private static readonly Regex _regex = new Regex("^[0-9]+$");
+        private static readonly Regex _regexChiffre = new Regex("^[0-9]+$");
 
         AlimentDAL _dal;
         Aliment _aliment;
@@ -46,7 +46,7 @@ namespace TP214E.Pages
         {
             if (VerifierChampsFormulaire())
             {
-                Aliment aliment = ObtenirInformationAliment();
+                Aliment aliment = ObtenirInformationDuFormulaire();
                 if (VerificationCasEnvoie())
                 {
                     CreerAliment(aliment);
@@ -65,22 +65,37 @@ namespace TP214E.Pages
             return (_aliment == null);
         }
 
-        private void CreerAliment(Aliment aliment)
+        private void CreerAliment(Aliment alimentACree)
         {
-            _dal.CreerAliment(aliment);
-            FermerPage(null, null);
+            bool requeteReussi = _dal.CreerAliment(alimentACree);
+            VerifierReussiteRequete(requeteReussi);
         }
 
-        private void ModifierAliment(Aliment aliment)
+        private void ModifierAliment(Aliment alimentAModifier)
         {
-            _dal.ModifierAliment(aliment);
-            FermerPage(null, null);
+            bool requeteReussi = _dal.ModifierAliment(alimentAModifier);
+            VerifierReussiteRequete(requeteReussi);
         }
 
-        private Aliment ObtenirInformationAliment()
+        public void VerifierReussiteRequete(bool requeteReussi)
         {
-            Aliment nouvelAliment = new Aliment(txtNom.Text, Int32.Parse(txtQuatite.Text),
-                txtUnite.Text, DateTime.Parse(dpkDate.Text));
+            if (requeteReussi)
+            {
+                FermerPage(null, null);
+            }
+            else
+            {
+                erreurConnection.Text = "Il y a eu une erreur lors de la conenction au server.";
+            }
+        }
+
+        private Aliment ObtenirInformationDuFormulaire()
+        {
+            Aliment nouvelAliment = new Aliment(
+                txtNom.Text,
+                Int32.Parse(txtQuatite.Text),
+                txtUnite.Text,
+                DateTime.Parse(dpkDate.Text));
 
             return nouvelAliment;
         }
@@ -99,19 +114,21 @@ namespace TP214E.Pages
 
         public bool VerifierChampsFormulaire()
         {
-            return (VerificationChampNom() && VerificationChampQuantite() &&
-                VerificationChampUnite() && VerificationChampDate());
+            return (VerificationChampNom() &&
+                VerificationChampQuantite() &&
+                VerificationChampUnite() &&
+                VerificationChampDate());
         }
 
-        public static bool SontDesNombre(string text)
+        public static bool SontDesChiffre(string text)
         {
-            bool estUnNombre = _regex.IsMatch(text);
+            bool estUnNombre = _regexChiffre.IsMatch(text);
             return estUnNombre;
         }
 
         public void PreviewQuatiteTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !SontDesNombre(e.Text);
+            e.Handled = !SontDesChiffre(e.Text);
         }
 
         private bool VerificationChampDate()
@@ -154,7 +171,7 @@ namespace TP214E.Pages
         {
             if (VerifierSiChaineEstVide(txtQuatite.Text))
             {
-                if (SontDesNombre(txtQuatite.Text))
+                if (SontDesChiffre(txtQuatite.Text))
                 {
                     erreurQuantite.Text = "";
                     return true;

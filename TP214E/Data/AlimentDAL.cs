@@ -36,11 +36,11 @@ namespace TP214E.Data
             return aliments;
         }
 
-        public bool CreerAliment(Aliment aliment)
+        public bool CreerAliment(Aliment alimentACreer)
         {
             try
             {
-                _collectionAliment.InsertOne(aliment);
+                _collectionAliment.InsertOne(alimentACreer);
             }
             catch (Exception ex)
             {
@@ -68,12 +68,27 @@ namespace TP214E.Data
             return false;
         }
 
-        public bool ModifierAliment(Aliment aliment)
+        public bool ModifierAliment(Aliment alimentAModifier)
         {
             try
             {
-                var filtre = Builders<Aliment>.Filter.Eq(s => s.Id, aliment.Id);
-                _collectionAliment.ReplaceOne(filtre, aliment);
+                var filtre = Builders<Aliment>.Filter.Eq(s => s.Id, alimentAModifier.Id);
+                _collectionAliment.ReplaceOne(filtre, alimentAModifier);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Impossible de se connecter à la base de données " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            return true;
+        }
+
+        public bool SupprimerAliment(Aliment alimentASupprimer)
+        {
+            try
+            {
+                var filtre = Builders<Aliment>.Filter.Eq(s => s.Id, alimentASupprimer.Id);
+                _collectionAliment.DeleteOne(filtre);
             }
             catch (Exception ex)
             {
