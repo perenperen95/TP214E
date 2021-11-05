@@ -85,7 +85,7 @@ namespace TP214E.Pages
             }
             else
             {
-                erreurConnection.Text = "Il y a eu une erreur lors de la conenction au server.";
+                MessageBox.Show("Il y a eu une erreur lors de la conenction au server.");
             }
         }
 

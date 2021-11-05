@@ -63,9 +63,10 @@ namespace TP214E.Data
             catch (Exception ex)
             {
                 MessageBox.Show("Impossible de se connecter à la base de données " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         public bool ModifierAliment(Aliment alimentAModifier)

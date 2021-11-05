@@ -17,11 +17,10 @@
         <GroupBox x:Name="gboBoutons" Header="Inventaire" Grid.Column="0" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="#FF00FF23">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="7*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Button x:Name="btnAcheterAliment" Grid.Row="0" Content="Acheter des aliments" Click="btnAcheterAliment_Click" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
-                <TextBlock x:Name="lblErreur" Grid.Row="1" Foreground="Red" Height="100px" VerticalAlignment="Bottom"/>
                 <Button Content="Retour" Grid.Row="1" Click="Button_Click" VerticalAlignment="Bottom" />
             </Grid>
 

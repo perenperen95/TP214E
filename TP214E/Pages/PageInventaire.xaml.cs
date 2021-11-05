@@ -66,7 +66,7 @@ namespace TP214E
                 ChargerLesAliments();
             }
             else {
-                lblErreur.Text = "Il y a eu une erreur lors de la suppression";
+                MessageBox.Show("Il y a eu une erreur lors de la suppression");
             }
         }
 

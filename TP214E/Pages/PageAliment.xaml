@@ -32,7 +32,6 @@
             <TextBlock Text="Id" Grid.Column="0" Grid.Row="0" Margin="20,20,0,0" Foreground="White"></TextBlock>
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="lblId" Text="" Margin="0,20,30,0" Foreground="White"></TextBlock>
-                <TextBlock x:Name="erreurConnection" Text="" Margin="0,3,30,0" Foreground="Red" FontSize="10"></TextBlock>
             </StackPanel>
 
             <TextBlock Text="Nom" Grid.Column="0" Grid.Row="1" Margin="20,0,0,0" Foreground="White"></TextBlock>
