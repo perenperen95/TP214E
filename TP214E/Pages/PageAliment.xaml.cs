@@ -13,13 +13,14 @@ using System.Windows.Shapes;
 using TP214E.Data;
 using System.Text.RegularExpressions;
 using MongoDB.Bson;
+using TP214E.Pages.Interfaces;
 
 namespace TP214E.Pages
 {
     /// <summary>
     /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class PageAliment : Page
+    public partial class PageAliment : Page, IPageAliment
     {
         private static readonly Regex _regexChiffre = new Regex("^[0-9]+$");
 
@@ -114,10 +115,10 @@ namespace TP214E.Pages
 
         public bool VerifierChampsFormulaire()
         {
-            return (VerificationChampNom() &&
-                VerificationChampQuantite() &&
-                VerificationChampUnite() &&
-                VerificationChampDate());
+            return (VerificationSiChampTextVide(erreurNom,txtNom.Text) &&
+                VerificationChampQuantite(erreurQuantite,txtQuatite) &&
+                VerificationSiChampTextVide(erreurUnite, txtUnite.Text) &&
+                VerificationChampDate(erreurDate,dpkDate));
         }
 
         public static bool SontDesChiffre(string text)
@@ -131,74 +132,58 @@ namespace TP214E.Pages
             e.Handled = !SontDesChiffre(e.Text);
         }
 
-        private bool VerificationChampDate()
+        public bool VerificationChampDate(TextBlock labelErreur,DatePicker champDate)
         {
-            if (VerifierSiChaineEstVide(dpkDate.Text))
+            if (VerificationSiChampTextVide(labelErreur, champDate.Text))
             {
-                if (DateTime.Parse(dpkDate.Text) > DateTime.Today)
+                if (DateTime.Parse(champDate.Text) > DateTime.Today)
                 {
-                    erreurDate.Text = "";
+                    EnleverErreurChamp(labelErreur);
                     return true;
                 }
                 else
                 {
-                    erreurDate.Text = "La date que vous avez entré est invalide.";
+                    AfficherErreurChamp(labelErreur, "La date que vous avez entré est invalide.");
                     return false;
                 }
             }
             else
             {
-                erreurDate.Text = "Ce champ est vide.";
                 return false;
             }
         }
 
-        public bool VerificationChampUnite()
+        public bool VerificationChampQuantite(TextBlock labelErreur, TextBox champQuatite)
         {
-            if (VerifierSiChaineEstVide(txtUnite.Text))
+            if (VerificationSiChampTextVide(erreurQuantite, champQuatite.Text))
             {
-                erreurUnite.Text = "";
-                return true;
-            }
-            else
-            {
-                erreurUnite.Text = "Ce champ est vide.";
-                return false;
-            }
-        }
-
-        public bool VerificationChampQuantite()
-        {
-            if (VerifierSiChaineEstVide(txtQuatite.Text))
-            {
-                if (SontDesChiffre(txtQuatite.Text))
+                if (SontDesChiffre(champQuatite.Text))
                 {
-                    erreurQuantite.Text = "";
+                    EnleverErreurChamp(labelErreur);
                     return true;
                 }
                 else
                 {
-                    erreurQuantite.Text = "Ce champ doit comporter que des nombres.";
+                    AfficherErreurChamp(labelErreur, "Ce champ doit comporter que des nombres.");
                     return false;
                 }
             }
             else
             {
-                erreurQuantite.Text = "Ce champ est vide.";
                 return false;
             }
         }
 
-        public bool VerificationChampNom()
+        public bool VerificationSiChampTextVide(TextBlock labelErreur, string valeurChampFormulaire)
         {
-            if (VerifierSiChaineEstVide(txtNom.Text))
+            if (VerifierSiChaineEstVide(valeurChampFormulaire))
             {
-                erreurNom.Text = "";
+                EnleverErreurChamp(labelErreur);
                 return true;
             }
             else
             {
-                erreurNom.Text = "Ce champ est vide.";
+                AfficherErreurChamp(labelErreur, "Ce champ est vide.");
                 return false;
             }
         }
@@ -206,6 +191,16 @@ namespace TP214E.Pages
         private bool VerifierSiChaineEstVide(string text)
         {
             return (text != "");
+        }
+
+        public void AfficherErreurChamp(TextBlock labelErreur, string erreur)
+        {
+            labelErreur.Text = erreur;
+        }
+
+        public void EnleverErreurChamp(TextBlock labelErreur)
+        {
+            labelErreur.Text = "";
         }
     }
     
