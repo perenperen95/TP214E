@@ -29,7 +29,7 @@ namespace TP214E
 
         private void BoutonInventaire_Click(object sender, RoutedEventArgs e)
         {
-            PageInventaire frmInventaire = new PageInventaire(dal);
+            PageInventaire frmInventaire = new PageInventaire();
 
             this.NavigationService.Navigate(frmInventaire);
 

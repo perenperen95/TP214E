@@ -6,9 +6,58 @@
       xmlns:local="clr-namespace:TP214E"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Inventaire">
+      Title="Inventaire"
+      Loaded="AuChargement">
 
-    <Grid>
-        
+    <Grid x:Name="GrilleInventaire" Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox x:Name="gboBoutons" Header="Inventaire" Grid.Column="0" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="#FF00FF23">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button x:Name="btnAcheterAliment" Grid.Row="0" Content="Acheter des aliments" Click="btnAcheterAliment_Click" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                <Button Content="Retour" Grid.Row="1" Click="Button_Click" VerticalAlignment="Bottom" />
+            </Grid>
+
+        </GroupBox>
+
+        <ListView x:Name="lvAliments" Grid.Column="1" ItemsSource="{Binding aliments}"
+                  Background="#FF8B8989" Foreground="#FF007A11" BorderBrush="#FFE2E2E2">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Supprimer"
+                            Command="{Binding SupprimerAliment}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},
+                            Path=PlacementTarget.SelectedItem}" Click="MenuItem_Click">
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Informations des aliments">
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Nom}" Header="Nom" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Quantite}" Header="Quantite" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Unite}" Header="Unite" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ExpireLe}" Header="Date de péremption" Width="200"/>
+                </GridView>
+
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
 </Page>

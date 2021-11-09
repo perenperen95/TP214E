@@ -18,7 +18,7 @@ namespace TP214E.Pages
     /// Interaction logic for PageCommandes.xaml
     /// </summary>
     public partial class PageCommandes : Page
-    {
+    {   
         public PageCommandes(DAL dal)
         {
             InitializeComponent();
