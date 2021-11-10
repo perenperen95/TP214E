@@ -21,10 +21,37 @@ namespace TP214E.Pages
     {
         AlimentDAL _alimentDAL;
         RecetteDAL _recetteDAL;
-        CommandeDAL _recetteDAL;
+        CommandeDAL _CommadeDAL;
         public PageCommandes(AlimentDAL dal)
         {
             InitializeComponent();
         }
+
+        public List<Recette> RecuperationToutesRecettesPossibles()
+        {
+            List<Recette> recettesPossibles = new List<Recette>();
+            List<Recette> recettesExistantes = _recetteDAL.RechercherToutesLesRecettes();
+            List<Aliment> alimentsDansInventaire = _alimentDAL.RechercherTousLesAliments();
+
+
+            foreach (Recette recette in recettesExistantes)
+            {
+                foreach (var aliment in recette.AlimentsQuantites)
+                {
+                    if (aliment.Value <= aliment.Key.Quantite)
+                    {
+
+                    }
+
+                }
+            }
+
+            return recettesPossibles;
+        }
+
+        //private static bool InventaireDisponiblePourAliment(Aliment pAliment1, Aliment pAliment2)
+        //{
+        //    return pAliment1.Quantite >= pAliment2.Quantite;
+        //}
     }
 }
