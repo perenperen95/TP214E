@@ -18,8 +18,11 @@ namespace TP214E.Pages
     /// Interaction logic for PageCommandes.xaml
     /// </summary>
     public partial class PageCommandes : Page
-    {   
-        public PageCommandes(DAL dal)
+    {
+        AlimentDAL _alimentDAL;
+        RecetteDAL _recetteDAL;
+        CommandeDAL _recetteDAL;
+        public PageCommandes(AlimentDAL dal)
         {
             InitializeComponent();
         }
