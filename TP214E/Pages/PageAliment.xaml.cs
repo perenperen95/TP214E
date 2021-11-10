@@ -13,17 +13,14 @@ using System.Windows.Shapes;
 using TP214E.Data;
 using System.Text.RegularExpressions;
 using MongoDB.Bson;
-using TP214E.Pages.Interfaces;
 
 namespace TP214E.Pages
 {
     /// <summary>
     /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class PageAliment : Page, IPageAliment
+    public partial class PageAliment : Page
     {
-        private static readonly Regex _regexChiffre = new Regex("^[0-9]+$");
-
         AlimentDAL _dal;
         Aliment _aliment;
 
@@ -45,10 +42,10 @@ namespace TP214E.Pages
 
         public void EnvoyerInformationsAliment(object sender, RoutedEventArgs e)
         {
-            if (VerifierChampsFormulaire())
+            Aliment aliment = ObtenirInformationDuFormulaire();
+            if (aliment != null)
             {
-                Aliment aliment = ObtenirInformationDuFormulaire();
-                if (VerificationCasEnvoie())
+                if (VerificationCasEnvoie(_aliment))
                 {
                     CreerAliment(aliment);
                 }
@@ -61,9 +58,9 @@ namespace TP214E.Pages
             
         }
 
-        private bool VerificationCasEnvoie()
+        private bool VerificationCasEnvoie(Aliment aliment)
         {
-            return (_aliment == null);
+            return (aliment == null);
         }
 
         private void CreerAliment(Aliment alimentACree)
@@ -92,13 +89,22 @@ namespace TP214E.Pages
 
         private Aliment ObtenirInformationDuFormulaire()
         {
-            Aliment nouvelAliment = new Aliment(
+            try
+            {
+                Aliment nouvelAliment = new Aliment(
                 txtNom.Text,
-                Int32.Parse(txtQuatite.Text),
+                txtQuatite.Text,
                 txtUnite.Text,
-                DateTime.Parse(dpkDate.Text));
+                dpkDate.Text);
 
-            return nouvelAliment;
+                return nouvelAliment;
+            }
+            catch(ArgumentException erreur)
+            {
+                MessageBox.Show(erreur.Message);
+                return null;
+            }
+            
         }
 
         private void RemplissageFormulaire()
@@ -113,95 +119,11 @@ namespace TP214E.Pages
             }
         }
 
-        public bool VerifierChampsFormulaire()
-        {
-            return (VerificationSiChampTextVide(erreurNom,txtNom.Text) &&
-                VerificationChampQuantite(erreurQuantite,txtQuatite) &&
-                VerificationSiChampTextVide(erreurUnite, txtUnite.Text) &&
-                VerificationChampDate(erreurDate,dpkDate));
-        }
-
-        public static bool SontDesChiffre(string text)
-        {
-            bool estUnNombre = _regexChiffre.IsMatch(text);
-            return estUnNombre;
-        }
-
         public void PreviewQuatiteTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !SontDesChiffre(e.Text);
+            e.Handled = !Aliment.TextContienQueDesChiffre(e.Text);
         }
 
-        public bool VerificationChampDate(TextBlock labelErreur,DatePicker champDate)
-        {
-            if (VerificationSiChampTextVide(labelErreur, champDate.Text))
-            {
-                if (DateTime.Parse(champDate.Text) > DateTime.Today)
-                {
-                    EnleverErreurChamp(labelErreur);
-                    return true;
-                }
-                else
-                {
-                    AfficherErreurChamp(labelErreur, "La date que vous avez entré est invalide.");
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool VerificationChampQuantite(TextBlock labelErreur, TextBox champQuatite)
-        {
-            if (VerificationSiChampTextVide(erreurQuantite, champQuatite.Text))
-            {
-                if (SontDesChiffre(champQuatite.Text))
-                {
-                    EnleverErreurChamp(labelErreur);
-                    return true;
-                }
-                else
-                {
-                    AfficherErreurChamp(labelErreur, "Ce champ doit comporter que des nombres.");
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool VerificationSiChampTextVide(TextBlock labelErreur, string valeurChampFormulaire)
-        {
-            if (VerifierSiChaineEstVide(valeurChampFormulaire))
-            {
-                EnleverErreurChamp(labelErreur);
-                return true;
-            }
-            else
-            {
-                AfficherErreurChamp(labelErreur, "Ce champ est vide.");
-                return false;
-            }
-        }
-
-        private bool VerifierSiChaineEstVide(string text)
-        {
-            return (text != "");
-        }
-
-        public void AfficherErreurChamp(TextBlock labelErreur, string erreur)
-        {
-            labelErreur.Text = erreur;
-        }
-
-        public void EnleverErreurChamp(TextBlock labelErreur)
-        {
-            labelErreur.Text = "";
-        }
     }
     
 }
