@@ -23,7 +23,7 @@ namespace TP214E
         public PageInventaire(DAL dal)
         {
             InitializeComponent();
-            aliments = dal.ALiments();
+            aliments = dal.Aliments();
         }
     }
 }

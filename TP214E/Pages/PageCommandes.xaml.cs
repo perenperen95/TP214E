@@ -19,9 +19,11 @@ namespace TP214E.Pages
     /// </summary>
     public partial class PageCommandes : Page
     {
+        private List<Aliment> aliments;
         public PageCommandes(DAL dal)
         {
             InitializeComponent();
+            aliments = dal.Aliments();
         }
     }
 }
