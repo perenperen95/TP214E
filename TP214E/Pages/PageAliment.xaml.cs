@@ -21,14 +21,12 @@ namespace TP214E.Pages
     /// </summary>
     public partial class PageAliment : Page
     {
-        private static readonly Regex _regexChiffre = new Regex("^[0-9]+$");
-
         AlimentDAL _dal;
         Aliment _aliment;
 
-        public PageAliment(AlimentDAL dal, Aliment aliment)
+        public PageAliment(IAlimentDAL dal, Aliment aliment)
         {
-            _dal = dal;
+            _dal = (AlimentDAL) dal;
             _aliment = aliment;
             InitializeComponent();
             RemplissageFormulaire();
@@ -44,36 +42,36 @@ namespace TP214E.Pages
 
         public void EnvoyerInformationsAliment(object sender, RoutedEventArgs e)
         {
-            if (VerifierChampsFormulaire())
+            Aliment aliment = ObtenirInformationDuFormulaire();
+            if (aliment != null)
             {
-                Aliment aliment = ObtenirInformationDuFormulaire();
-                if (VerificationCasEnvoie())
+                if (VerificationCasEnvoie(_aliment))
                 {
-                    CreerAliment(aliment);
+                    CreerAliment(aliment, _dal);
                 }
                 else
                 {
                     aliment.Id = ObjectId.Parse(lblId.Text);
-                    ModifierAliment(aliment);
+                    ModifierAliment(aliment, _dal);
                 }
             }
             
         }
 
-        private bool VerificationCasEnvoie()
+        public static bool VerificationCasEnvoie(Aliment aliment)
         {
-            return (_aliment == null);
+            return (aliment == null);
         }
 
-        private void CreerAliment(Aliment alimentACree)
+        public void CreerAliment(Aliment alimentACree, IAlimentDAL dal)
         {
-            bool requeteReussi = _dal.CreerAliment(alimentACree);
+            bool requeteReussi = dal.CreerAliment(alimentACree);
             VerifierReussiteRequete(requeteReussi);
         }
 
-        private void ModifierAliment(Aliment alimentAModifier)
+        public void ModifierAliment(Aliment alimentAModifier, IAlimentDAL dal)
         {
-            bool requeteReussi = _dal.ModifierAliment(alimentAModifier);
+            bool requeteReussi = dal.ModifierAliment(alimentAModifier);
             VerifierReussiteRequete(requeteReussi);
         }
 
@@ -91,13 +89,22 @@ namespace TP214E.Pages
 
         private Aliment ObtenirInformationDuFormulaire()
         {
-            Aliment nouvelAliment = new Aliment(
+            try
+            {
+                Aliment nouvelAliment = new Aliment(
                 txtNom.Text,
-                Int32.Parse(txtQuatite.Text),
+                txtQuatite.Text,
                 txtUnite.Text,
-                DateTime.Parse(dpkDate.Text));
+                dpkDate.Text);
 
-            return nouvelAliment;
+                return nouvelAliment;
+            }
+            catch(ArgumentException erreur)
+            {
+                MessageBox.Show(erreur.Message);
+                return null;
+            }
+            
         }
 
         private void RemplissageFormulaire()
@@ -112,101 +119,11 @@ namespace TP214E.Pages
             }
         }
 
-        public bool VerifierChampsFormulaire()
-        {
-            return (VerificationChampNom() &&
-                VerificationChampQuantite() &&
-                VerificationChampUnite() &&
-                VerificationChampDate());
-        }
-
-        public static bool SontDesChiffre(string text)
-        {
-            bool estUnNombre = _regexChiffre.IsMatch(text);
-            return estUnNombre;
-        }
-
         public void PreviewQuatiteTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !SontDesChiffre(e.Text);
+            e.Handled = !Aliment.TextContienQueDesChiffre(e.Text);
         }
 
-        private bool VerificationChampDate()
-        {
-            if (VerifierSiChaineEstVide(dpkDate.Text))
-            {
-                if (DateTime.Parse(dpkDate.Text) > DateTime.Today)
-                {
-                    erreurDate.Text = "";
-                    return true;
-                }
-                else
-                {
-                    erreurDate.Text = "La date que vous avez entré est invalide.";
-                    return false;
-                }
-            }
-            else
-            {
-                erreurDate.Text = "Ce champ est vide.";
-                return false;
-            }
-        }
-
-        public bool VerificationChampUnite()
-        {
-            if (VerifierSiChaineEstVide(txtUnite.Text))
-            {
-                erreurUnite.Text = "";
-                return true;
-            }
-            else
-            {
-                erreurUnite.Text = "Ce champ est vide.";
-                return false;
-            }
-        }
-
-        public bool VerificationChampQuantite()
-        {
-            if (VerifierSiChaineEstVide(txtQuatite.Text))
-            {
-                if (SontDesChiffre(txtQuatite.Text))
-                {
-                    erreurQuantite.Text = "";
-                    return true;
-                }
-                else
-                {
-                    erreurQuantite.Text = "Ce champ doit comporter que des nombres.";
-                    return false;
-                }
-            }
-            else
-            {
-                erreurQuantite.Text = "Ce champ est vide.";
-                return false;
-            }
-        }
-
-        public bool VerificationChampNom()
-        {
-            if (VerifierSiChaineEstVide(txtNom.Text))
-            {
-                erreurNom.Text = "";
-                return true;
-            }
-            else
-            {
-                erreurNom.Text = "Ce champ est vide.";
-                return false;
-            }
-        }
-
-        private bool VerifierSiChaineEstVide(string text)
-        {
-            return (text != "");
-        }
     }
     
 }
