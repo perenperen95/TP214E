@@ -22,7 +22,7 @@ namespace TP214E.Pages
         AlimentDAL _alimentDAL;
         RecetteDAL _recetteDAL;
         CommandeDAL _CommadeDAL;
-        public PageCommandes(AlimentDAL dal)
+        public PageCommandes()
         {
             InitializeComponent();
         }
