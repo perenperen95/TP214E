@@ -24,7 +24,7 @@ namespace TP214E.Pages
         CommandeDAL _CommadeDAL;
         Commande _maCommande;
         List<Recette> _recettesPossibles;
-        public PageCommandes(AlimentDAL dal)
+        public PageCommandes()
         {
             InitializeComponent();
             _maCommande = new Commande();
@@ -95,7 +95,7 @@ namespace TP214E.Pages
 
             nouveauBouton.Content = pRecette.Nom;
             nouveauBouton.Name = "Bouton" + pRecette.Nom;
-            nouveauBouton.Padding = new Thickness(4);
+            nouveauBouton.Margin = new Thickness(3);
             nouveauBouton.Tag = pRecette;
 
             nouveauBouton.Click += (object sender, RoutedEventArgs e) =>
@@ -144,6 +144,8 @@ namespace TP214E.Pages
                 Button nouveauBouton = new Button();
                 nouveauBouton.Name = "Bouton" + i.ToString();
                 nouveauBouton.Content = "test" + i.ToString();
+                nouveauBouton.Margin = new Thickness(3);
+                nouveauBouton.VerticalContentAlignment = VerticalAlignment.Stretch;
                 nouveauBouton.Click += (object sender, RoutedEventArgs e) =>
                 {
                     lbCommande.Items.Add(nouveauBouton.Content);
