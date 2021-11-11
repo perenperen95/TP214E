@@ -37,25 +37,21 @@
             <TextBlock Text="Nom" Grid.Column="0" Grid.Row="1" Margin="20,0,0,0" Foreground="White"></TextBlock>
             <StackPanel Grid.Column="1" Grid.Row="1">
                 <TextBox x:Name="txtNom" Text="" Margin="0,5,30,0"></TextBox>
-                <TextBlock x:Name="erreurNom" Text="" Margin="0,3,30,0" Foreground="Red" FontSize="10"></TextBlock>
             </StackPanel>
 
             <TextBlock Text="Quantité" Grid.Column="0" Grid.Row="2" Margin="20,0,0,0" Foreground="White"></TextBlock>
             <StackPanel Grid.Column="1" Grid.Row="2">
                 <TextBox x:Name="txtQuatite" Text="" Margin="0,0,30,0" PreviewTextInput="PreviewQuatiteTextInput"></TextBox>
-                <TextBlock x:Name="erreurQuantite" Text="" Margin="0,3,30,0" Foreground="Red" FontSize="10"></TextBlock>
             </StackPanel>
 
             <TextBlock Text="Unité" Grid.Column="0" Grid.Row="3" Margin="20,0,0,0" Foreground="White"></TextBlock>
             <StackPanel Grid.Column="1" Grid.Row="3">
                 <TextBox x:Name="txtUnite" Text="" Margin="0,0,30,0"></TextBox>
-                <TextBlock x:Name="erreurUnite" Text="" Margin="0,3,30,0" Foreground="Red" FontSize="10"></TextBlock>
             </StackPanel>
 
             <TextBlock Text="Date de péremption" Grid.Column="0" Grid.Row="4" Margin="20,0,0,0" Foreground="White"></TextBlock>
             <StackPanel  Grid.Column="1" Grid.Row="4">
                 <DatePicker x:Name="dpkDate" Margin="0,0,30,0"></DatePicker>
-                <TextBlock x:Name="erreurDate" Text="" Margin="0,3,30,0" Foreground="Red" FontSize="10"></TextBlock>
             </StackPanel>
         </Grid>
         <Button Grid.Column="0" Grid.Row="1" Width="100" Height="30" x:Name="btnFermerPage" Click="FermerPage" Content="Annuler" HorizontalAlignment="Center" VerticalAlignment="Center"/>
