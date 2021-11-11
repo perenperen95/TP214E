@@ -9,21 +9,19 @@ namespace TP214E.Data
     {
         private ObjectId _id;
         private List<Recette>_items;
-        private int _total;
+        private decimal _total;
         private DateTime _dateHeure;
 
-        public Commande(ObjectId pId, Recette pRecette)
+        public Commande(ObjectId pId)
         {
             Total = 0;
             Items = new List<Recette>();
-            AjouterItemCommande(pRecette);
         }
 
-        public Commande(Recette pRecette)
+        public Commande()
         {
             Total = 0;
             Items = new List<Recette>();
-            AjouterItemCommande(pRecette);
         }
 
         public void AjouterItemCommande(Recette pRecette)
@@ -48,7 +46,7 @@ namespace TP214E.Data
             get { return _items; }
             set { _items = value; }
         }
-        public int Total
+        public decimal Total
         {
             get { return _total; }
             set { _total = value; }

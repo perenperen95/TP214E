@@ -18,13 +18,18 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <GroupBox x:Name="gbCommande" Header="Commande" Grid.Row="0" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="#FF00FF23">
                 <ListBox x:Name="lbCommande">
                 </ListBox>
+                
             </GroupBox>
-            <Button Grid.Row="1">Retirer</Button>
-            <Button Grid.Row="2">Commander</Button>
+            <Label Grid.Row="1" x:Name="lblTotal" Content=""/>
+            <Button Grid.Row="2" x:Name="btnRetirer" Click="btnRetirer_Click">Retirer</Button>
+            <Button Grid.Row="3" x:Name="btnCommander" Click="btnCommander_Click">Commander</Button>
+            <Button Grid.Row="4" x:Name="btnHistorique">Historique</Button>
         </Grid>
         <Grid Grid.Column="1" Background="LightGray">
             <Grid.ColumnDefinitions>
