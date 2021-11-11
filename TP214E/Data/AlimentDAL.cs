@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace TP214E.Data
 {
-    public class AlimentDAL: DAL
+    public class AlimentDAL : DAL, IAlimentDAL
     {
         const string NOM_DE_LA_COLLECTION_ALIMENT = "Aliments";
 
@@ -47,25 +47,6 @@ namespace TP214E.Data
                 MessageBox.Show("Impossible de se connecter à la base de données " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
-            return true;
-        }
-
-        public bool ChercherUnAliment(string nomAliment)
-        {
-            try
-            {
-                IMongoDatabase db = mongoDBClient.GetDatabase(NOM_DE_LA_BD);
-                var constructeur = Builders<Aliment>.Filter;
-                var filtre = constructeur.Eq("Nom", nomAliment);
-
-                Aliment aliment = _collectionAliment.Find(filtre).First();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Impossible de se connecter à la base de données " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
             return true;
         }
 

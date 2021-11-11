@@ -24,9 +24,9 @@ namespace TP214E.Pages
         AlimentDAL _dal;
         Aliment _aliment;
 
-        public PageAliment(AlimentDAL dal, Aliment aliment)
+        public PageAliment(IAlimentDAL dal, Aliment aliment)
         {
-            _dal = dal;
+            _dal = (AlimentDAL) dal;
             _aliment = aliment;
             InitializeComponent();
             RemplissageFormulaire();
@@ -47,31 +47,31 @@ namespace TP214E.Pages
             {
                 if (VerificationCasEnvoie(_aliment))
                 {
-                    CreerAliment(aliment);
+                    CreerAliment(aliment, _dal);
                 }
                 else
                 {
                     aliment.Id = ObjectId.Parse(lblId.Text);
-                    ModifierAliment(aliment);
+                    ModifierAliment(aliment, _dal);
                 }
             }
             
         }
 
-        private bool VerificationCasEnvoie(Aliment aliment)
+        public static bool VerificationCasEnvoie(Aliment aliment)
         {
             return (aliment == null);
         }
 
-        private void CreerAliment(Aliment alimentACree)
+        public void CreerAliment(Aliment alimentACree, IAlimentDAL dal)
         {
-            bool requeteReussi = _dal.CreerAliment(alimentACree);
+            bool requeteReussi = dal.CreerAliment(alimentACree);
             VerifierReussiteRequete(requeteReussi);
         }
 
-        private void ModifierAliment(Aliment alimentAModifier)
+        public void ModifierAliment(Aliment alimentAModifier, IAlimentDAL dal)
         {
-            bool requeteReussi = _dal.ModifierAliment(alimentAModifier);
+            bool requeteReussi = dal.ModifierAliment(alimentAModifier);
             VerifierReussiteRequete(requeteReussi);
         }
 
