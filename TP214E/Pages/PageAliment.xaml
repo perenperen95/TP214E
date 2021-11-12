@@ -54,8 +54,8 @@
                 <DatePicker x:Name="dpkDate" Margin="0,0,30,0"></DatePicker>
             </StackPanel>
         </Grid>
-        <Button Grid.Column="0" Grid.Row="1" Width="100" Height="30" x:Name="btnFermerPage" Click="FermerPage" Content="Annuler" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button Grid.Column="1" Grid.Row="1" Width="100" Height="30" x:Name="btnEnvoyerInfo" Click="EnvoyerInformationsAliment" Content="Envoyer" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Grid.Column="0" Grid.Row="1" Width="100" Height="30" x:Name="btnFermerPage" Click="FermerPage" Content="Annuler" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="White" Background="Black" Foreground="White"/>
+        <Button Grid.Column="1" Grid.Row="1" Width="100" Height="30" x:Name="btnEnvoyerInfo" Click="EnvoyerInformationsAliment" Content="Envoyer" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" BorderBrush="White" Background="Black"/>
 
     </Grid>
 </Page>
