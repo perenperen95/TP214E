@@ -24,7 +24,7 @@ namespace TP214E.Pages
         CommandeDAL _CommadeDAL;
         Commande _maCommande;
         List<Recette> _recettesPossibles;
-        public PageCommandes(AlimentDAL dal)
+        public PageCommandes()
         {
             InitializeComponent();
             _maCommande = new Commande();
