@@ -21,16 +21,19 @@ namespace TP214E.Pages
     {
         AlimentDAL _alimentDAL;
         RecetteDAL _recetteDAL;
-        CommandeDAL _CommadeDAL;
+        CommandeDAL _CommandeDAL;
         Commande _maCommande;
         List<Recette> _recettesPossibles;
         public PageCommandes()
         {
             InitializeComponent();
             _maCommande = new Commande();
-            //RecuperationToutesRecettesPossibles();
-            //RemplirAffichageRecette(_recettesPossibles);
-            testBoutonsHandlers();
+            _alimentDAL = new AlimentDAL();
+            _recetteDAL = new RecetteDAL();
+            _CommandeDAL = new CommandeDAL();
+            RecuperationToutesRecettesPossibles();
+            RemplirAffichageRecette(_recettesPossibles);
+            //testBoutonsHandlers();
         }
 
         private void RecuperationToutesRecettesPossibles()
@@ -39,16 +42,21 @@ namespace TP214E.Pages
             List<Recette> recettesExistantes = _recetteDAL.RechercherToutesLesRecettes();
             Dictionary<string, int> alimentsDansInventaire = ListeAlimentsEnDictionnaire();
 
-
+            bool alimentDisponible;
             foreach (Recette recette in recettesExistantes)
             {
+                alimentDisponible = true;
                 foreach (var aliment in recette.AlimentsQuantites)
                 {
-                    if (aliment.Value <= alimentsDansInventaire[aliment.Key])
+                    if (aliment.Value >= alimentsDansInventaire[aliment.Key])
                     {
-                        _recettesPossibles.Add(recette);
+                        alimentDisponible = false;
                     }
 
+                }
+                if (alimentDisponible)
+                {
+                    _recettesPossibles.Add(recette);
                 }
             }
         }
@@ -101,6 +109,7 @@ namespace TP214E.Pages
             nouveauBouton.Click += (object sender, RoutedEventArgs e) =>
             {
                 _maCommande.AjouterItemCommande(pRecette);
+                RafraichirListBoxCommande();
             };
 
             return nouveauBouton;
@@ -114,60 +123,94 @@ namespace TP214E.Pages
             {
                 lbCommande.Items.Add(item.Nom);
             }
+
+            lblTotal.Content = _maCommande.Total.ToString("0.00") + "$";
+
+            if (lbCommande.Items.Count > 0)
+            {
+                lbCommande.SelectedIndex = 0;
+            }
+                
+
         }
 
         private void btnRetirer_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in _maCommande.Items)
+            if (lbCommande.Items.Count > 0)
             {
-                if (item.Nom == lbCommande.SelectedItem.ToString())
-                {
-                    _maCommande.RetirerItemCommande(item);
-                }
-            }
-            RafraichirListBoxCommande();
+                string itemARetirer = lbCommande.SelectedItem.ToString();
+                Recette recetteARetirer = _maCommande.Items.Find(x => x.Nom == itemARetirer);
+                _maCommande.RetirerItemCommande(recetteARetirer);
+                RafraichirListBoxCommande();
+            }           
+            
         }
 
         private void btnCommander_Click(object sender, RoutedEventArgs e)
         {
-            _maCommande.DateHeure = DateTime.Now;
-            _CommadeDAL.AjouterCommandeLog(_maCommande);
-            _maCommande.Items.Clear();
-            _maCommande.Total = 0;
-            RafraichirListBoxCommande();
+            if(_maCommande.Items.Count > 0)
+            {
+                _maCommande.DateHeure = DateTime.Now;
+                _CommandeDAL.AjouterCommandeLog(_maCommande);
+
+                RetirerAlimentsUtilisesInventaire();
+
+                _maCommande = new Commande();
+                RafraichirListBoxCommande();
+            }           
         }
 
-        private void testBoutonsHandlers()
+        private void RetirerAlimentsUtilisesInventaire()
         {
-            for (int i = 0; i < 14; i++)
+            List<Aliment> ListeTousLesAliments = _alimentDAL.RechercherTousLesAliments();
+            foreach (Recette item in _maCommande.Items)
             {
-                Button nouveauBouton = new Button();
-                nouveauBouton.Name = "Bouton" + i.ToString();
-                nouveauBouton.Content = "test" + i.ToString();
-                nouveauBouton.Margin = new Thickness(3);
-                nouveauBouton.VerticalContentAlignment = VerticalAlignment.Stretch;
-                nouveauBouton.Click += (object sender, RoutedEventArgs e) =>
+                foreach (var aliment in item.AlimentsQuantites)
                 {
-                    lbCommande.Items.Add(nouveauBouton.Content);
-                };
-                if (i < 4)
-                {
-                    sp1.Children.Add(nouveauBouton);
-                }
-                else if (i < 8)
-                {
-                    sp2.Children.Add(nouveauBouton);
-                }
-                else if (i < 12)
-                {
-                    sp3.Children.Add(nouveauBouton);
-                }
-                else if (i < 16)
-                {
-                    sp4.Children.Add(nouveauBouton);
+                    Aliment alimentAModifier = ListeTousLesAliments.Find(x => x.Nom == aliment.Key);
+                    alimentAModifier.Quantite -= aliment.Value;
+                    _alimentDAL.ModifierAliment(alimentAModifier);
                 }
             }
         }
-        
+
+        private void btnHistorique_Click(object sender, RoutedEventArgs e)
+        {
+            PageHistoriqueCommande frmHistorique = new PageHistoriqueCommande(_CommandeDAL);
+            this.NavigationService.Navigate(frmHistorique);
+        }
+
+        //private void testBoutonsHandlers()
+        //{
+        //    for (int i = 0; i < 14; i++)
+        //    {
+        //        Button nouveauBouton = new Button();
+        //        nouveauBouton.Name = "Bouton" + i.ToString();
+        //        nouveauBouton.Content = "test" + i.ToString();
+        //        nouveauBouton.Margin = new Thickness(3);
+        //        nouveauBouton.VerticalContentAlignment = VerticalAlignment.Stretch;
+        //        nouveauBouton.Click += (object sender, RoutedEventArgs e) =>
+        //        {
+        //            lbCommande.Items.Add(nouveauBouton.Content);
+        //        };
+        //        if (i < 4)
+        //        {
+        //            sp1.Children.Add(nouveauBouton);
+        //        }
+        //        else if (i < 8)
+        //        {
+        //            sp2.Children.Add(nouveauBouton);
+        //        }
+        //        else if (i < 12)
+        //        {
+        //            sp3.Children.Add(nouveauBouton);
+        //        }
+        //        else if (i < 16)
+        //        {
+        //            sp4.Children.Add(nouveauBouton);
+        //        }
+        //    }
+        //}
+
     }
 }
