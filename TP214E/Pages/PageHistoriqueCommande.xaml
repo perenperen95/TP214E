@@ -88,9 +88,7 @@
                 <Style BasedOn="{StaticResource ListViewStyle}" TargetType="{x:Type ListView}" />
             </ListView.Resources>
             <ListView.ItemContainerStyle>
-                <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="{x:Type ListViewItem}">
-                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
-                </Style>
+                <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="{x:Type ListViewItem}"/>
             </ListView.ItemContainerStyle>
             <ListView.ContextMenu>
                 <ContextMenu>
@@ -120,9 +118,8 @@
                 <Style BasedOn="{StaticResource ListViewStyle}" TargetType="{x:Type ListView}" />
             </ListView.Resources>
             <ListView.ItemContainerStyle>
-                <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="{x:Type ListViewItem}">
-                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
-                </Style>
+                <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="{x:Type ListViewItem}"/>
+
             </ListView.ItemContainerStyle>
             <ListView.View>
 
