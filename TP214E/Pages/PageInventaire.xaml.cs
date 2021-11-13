@@ -23,10 +23,19 @@ namespace TP214E
     {
         private List<Aliment> aliments;
         AlimentDAL _dal;
+
         public PageInventaire()
         {
             _dal = new AlimentDAL();
+            aliments = new List<Aliment>();
+
+
             InitializeComponent();
+        }
+
+        public void AuChargement(object sender, RoutedEventArgs e)
+        {
+            ChargerLesAliments();
         }
 
         private void ChargerLesAliments()
@@ -36,10 +45,7 @@ namespace TP214E
             DataContext = this;
         }
 
-        public void AuChargement(object sender, RoutedEventArgs e)
-        {
-            ChargerLesAliments();
-        }
+        
 
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
@@ -71,7 +77,7 @@ namespace TP214E
             }
         }
 
-        private void btnAcheterAliment_Click(object sender, RoutedEventArgs e)
+        private void btnAjouterAliment_Click(object sender, RoutedEventArgs e)
         {
             PageAliment frmAliment = new PageAliment(_dal, null);
             this.NavigationService.Navigate(frmAliment);
@@ -84,7 +90,7 @@ namespace TP214E
             SupprimerAliment(alimentASupprimer);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonRetour_Click(object sender, RoutedEventArgs e)
         {
             RetournerAuMenu();
         }

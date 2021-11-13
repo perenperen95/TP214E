@@ -8,6 +8,62 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page1">
 
+    <Page.Resources>
+        <Style x:Key="survolBoutonPrincipal" TargetType="Button">
+            <Setter Property="Background" Value="#FF5F8C5A"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="Foreground" Value="White"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="White" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="survolBouton" TargetType="Button">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="Foreground" Value="White"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="White" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="black" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ListViewStyle" TargetType="{x:Type ListView}">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Black"/>
+        </Style>
+    </Page.Resources>
+    
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -54,8 +110,18 @@
                 <DatePicker x:Name="dpkDate" Margin="0,0,30,0"></DatePicker>
             </StackPanel>
         </Grid>
-        <Button Grid.Column="0" Grid.Row="1" Width="100" Height="30" x:Name="btnFermerPage" Click="FermerPage" Content="Annuler" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button Grid.Column="1" Grid.Row="1" Width="100" Height="30" x:Name="btnEnvoyerInfo" Click="EnvoyerInformationsAliment" Content="Envoyer" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Grid.Column="0" Grid.Row="1" Width="100" Height="30" x:Name="btnFermerPage"
+                Click="FermerPage" Content="Annuler" HorizontalAlignment="Center">
+            <Button.Style>
+                <Style BasedOn="{StaticResource survolBouton}" TargetType="{x:Type Button}" />
+            </Button.Style>
+        </Button>
+        <Button Grid.Column="1" Grid.Row="1" Width="100" Height="30" x:Name="btnEnvoyerInfo"
+                Click="EnvoyerInformationsAliment" Content="Envoyer" HorizontalAlignment="Center">
+            <Button.Style>
+                <Style BasedOn="{StaticResource survolBoutonPrincipal}" TargetType="{x:Type Button}" />
+            </Button.Style>
+        </Button>
 
     </Grid>
 </Page>
