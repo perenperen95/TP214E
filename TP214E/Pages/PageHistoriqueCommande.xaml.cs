@@ -20,15 +20,14 @@ namespace TP214E.Pages
     public partial class PageHistoriqueCommande : Page
     {
         private CommandeDAL _dal;
-        List<Commande> _commandes;
-        List<Recette> _recettesDeCommande;
+        private List<Commande> _commandes;
+        private List<Recette> _recettesDeCommande;
 
         public PageHistoriqueCommande(CommandeDAL dal)
         {
             _dal = dal;
             _commandes = new List<Commande>();
             _recettesDeCommande = new List<Recette>();
-
             InitializeComponent();
         }
 
@@ -40,18 +39,25 @@ namespace TP214E.Pages
         private void ChargerLesCommandes()
         {
             _commandes = _dal.RechercherToutesLesCommandes();
+            lvCommandes.ItemsSource = _commandes;
+            DataContext = this;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        public void ListViewItemClick_Click(object sender, RoutedEventArgs e)
         {
-            var elementDuMenu = (MenuItem)e.OriginalSource;
-            Commande commandeSelectionne = (Commande)elementDuMenu.CommandParameter;
-            AfficherRecetteDeLaCommande(commandeSelectionne);
+            ListViewItem elemetDeLaliste = sender as ListViewItem;
+            if (elemetDeLaliste != null && elemetDeLaliste.IsSelected)
+            {
+                Commande commandetSelectionne = (Commande)elemetDeLaliste.DataContext;
+                AfficherRecetteDeLaCommande(commandetSelectionne);
+            }
         }
 
         public void AfficherRecetteDeLaCommande(Commande commandeSelectionne)
         {
             _recettesDeCommande = commandeSelectionne.Items;
+            lvItems.ItemsSource = _recettesDeCommande;
+            DataContext = this;
         }
 
         private void ButtonRetour_Click(object sender, RoutedEventArgs e)

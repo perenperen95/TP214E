@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:TP214E.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PageHistoriqueCommande"
+      Title="Historique des commandes"
       Loaded="AuChargement">
 
     <Page.Resources>
@@ -65,7 +65,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black">
+    <Grid x:Name="GrilleHistoriqueCommandes" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
@@ -82,23 +82,16 @@
                    Text="Liste des commandes" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="1" Foreground="White" FontSize="17" 
                    Text="Liste des recettes de la commande sélectionnée" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        
-        <ListView x:Name="lvCommandes" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding commandes}">
+
+        <ListView x:Name="lvCommandes" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding _commandes}">
             <ListView.Resources>
                 <Style BasedOn="{StaticResource ListViewStyle}" TargetType="{x:Type ListView}" />
             </ListView.Resources>
             <ListView.ItemContainerStyle>
-                <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="{x:Type ListViewItem}"/>
+                <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItemClick_Click" />
+                </Style>
             </ListView.ItemContainerStyle>
-            <ListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Supprimer"
-                            Command="{Binding SupprimerAliment}"
-                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},
-                            Path=PlacementTarget.SelectedItem}" Click="MenuItem_Click">
-                    </MenuItem>
-                </ContextMenu>
-            </ListView.ContextMenu>
             <ListView.View>
 
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Informations des aliments">
@@ -112,8 +105,8 @@
 
             </ListView.View>
         </ListView>
-        
-        <ListView x:Name="lvItem" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding commandes}">
+
+        <ListView x:Name="lvItems" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding _recettesDeCommande}">
             <ListView.Resources>
                 <Style BasedOn="{StaticResource ListViewStyle}" TargetType="{x:Type ListView}" />
             </ListView.Resources>
