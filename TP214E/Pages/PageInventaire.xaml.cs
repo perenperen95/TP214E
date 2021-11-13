@@ -21,13 +21,13 @@ namespace TP214E
     /// </summary>
     public partial class PageInventaire : Page
     {
-        private List<Aliment> aliments;
+        private List<Aliment> _aliments;
         AlimentDAL _dal;
 
         public PageInventaire()
         {
             _dal = new AlimentDAL();
-            aliments = new List<Aliment>();
+            _aliments = new List<Aliment>();
 
 
             InitializeComponent();
@@ -40,8 +40,8 @@ namespace TP214E
 
         private void ChargerLesAliments()
         {
-            aliments = _dal.RechercherTousLesAliments();
-            lvAliments.ItemsSource = aliments;
+            _aliments = _dal.RechercherTousLesAliments();
+            lvAliments.ItemsSource = _aliments;
             DataContext = this;
         }
 
