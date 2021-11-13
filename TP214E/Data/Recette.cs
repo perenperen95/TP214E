@@ -34,7 +34,7 @@ namespace TP214E.Data
             set { _prix = value; }
         }
 
-        public Recette(ObjectId pId, string pNom, Dictionary<string, int> pDictAliments, int pPrix)
+        public Recette(ObjectId pId, string pNom, Dictionary<string, int> pDictAliments, decimal pPrix)
         {
             Id = pId;
             Nom = pNom;
@@ -42,7 +42,7 @@ namespace TP214E.Data
             Prix = pPrix;
         }
 
-        public Recette(string pNom, Dictionary<string, int> pDictAliments, int pPrix)
+        public Recette(string pNom, Dictionary<string, int> pDictAliments, decimal pPrix)
         {
             Nom = pNom;
             AlimentsQuantites = pDictAliments;

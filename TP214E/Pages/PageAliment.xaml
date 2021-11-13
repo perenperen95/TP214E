@@ -13,6 +13,7 @@
             <Setter Property="Background" Value="#FF5F8C5A"/>
             <Setter Property="BorderBrush" Value="White"/>
             <Setter Property="Foreground" Value="White"/>
+            
 
             <Setter Property="Template">
                 <Setter.Value>
