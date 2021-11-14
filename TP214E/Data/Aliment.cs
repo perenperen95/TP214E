@@ -89,12 +89,12 @@ namespace TP214E.Data
                 }
                 else
                 {
-                    throw new ArgumentException("Le champ quanite doit comporter que des nombres.");
+                    throw new ArgumentException("Le champ quantite doit comporter que des nombres.");
                 }
             }
             else
             {
-                throw new ArgumentException("Le champ quanite est vide.");
+                throw new ArgumentException("Le champ quantite est vide.");
             }
         }
 

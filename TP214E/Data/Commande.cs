@@ -14,6 +14,7 @@ namespace TP214E.Data
 
         public Commande(ObjectId pId)
         {
+            Id = pId;
             Total = 0;
             Items = new List<Recette>();
         }

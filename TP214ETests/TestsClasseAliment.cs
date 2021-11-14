@@ -72,7 +72,7 @@ namespace TP214E.Pages.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException), "Le champ quatite est vide.")]
+        [ExpectedException(typeof(ArgumentException), "Le champ quantite est vide.")]
         public void VerificationValeurQuantiteEchouSiValeurEstVide()
         {
             Aliment aliment = new Aliment();
@@ -83,7 +83,7 @@ namespace TP214E.Pages.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException), "Le champ quanite doit comporter que des nombres.")]
+        [ExpectedException(typeof(ArgumentException), "Le champ quantite doit comporter que des nombres.")]
         public void VerificationValeurQuantiteEchouSiValeurContienDesLettre()
         {
             Aliment aliment = new Aliment();

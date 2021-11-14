@@ -7,6 +7,25 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageCommandes">
+    <Page.Resources>
+        <Style x:Key="survolBoutonPrincipal" TargetType="Button">
+            <Setter Property="Background" Value="#FF5F8C5A"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="Auto" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="White" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -16,6 +35,7 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -30,8 +50,9 @@
             <Button Grid.Row="2" x:Name="btnRetirer" Click="btnRetirer_Click">Retirer</Button>
             <Button Grid.Row="3" x:Name="btnCommander" Click="btnCommander_Click">Commander</Button>
             <Button Grid.Row="4" x:Name="btnHistorique" Click="btnHistorique_Click">Historique</Button>
+            <Button Grid.Row="5" x:Name="btnRetour" Click="btnRetour_Click">Retour</Button>
         </Grid>
-        <Grid Grid.Column="1" Background="LightGray">
+        <Grid Grid.Column="1" Background="Black">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>

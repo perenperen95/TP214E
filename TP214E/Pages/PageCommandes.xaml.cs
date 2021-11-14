@@ -104,6 +104,8 @@ namespace TP214E.Pages
             nouveauBouton.Content = pRecette.Nom;
             nouveauBouton.Name = "Bouton" + pRecette.Nom;
             nouveauBouton.Margin = new Thickness(3);
+            nouveauBouton.HorizontalAlignment = HorizontalAlignment.Stretch;
+            nouveauBouton.Style = Resources["survolBoutonPrincipal"] as Style;
             nouveauBouton.Tag = pRecette;
 
             nouveauBouton.Click += (object sender, RoutedEventArgs e) =>
@@ -180,37 +182,12 @@ namespace TP214E.Pages
             this.NavigationService.Navigate(frmHistorique);
         }
 
-        //private void testBoutonsHandlers()
-        //{
-        //    for (int i = 0; i < 14; i++)
-        //    {
-        //        Button nouveauBouton = new Button();
-        //        nouveauBouton.Name = "Bouton" + i.ToString();
-        //        nouveauBouton.Content = "test" + i.ToString();
-        //        nouveauBouton.Margin = new Thickness(3);
-        //        nouveauBouton.VerticalContentAlignment = VerticalAlignment.Stretch;
-        //        nouveauBouton.Click += (object sender, RoutedEventArgs e) =>
-        //        {
-        //            lbCommande.Items.Add(nouveauBouton.Content);
-        //        };
-        //        if (i < 4)
-        //        {
-        //            sp1.Children.Add(nouveauBouton);
-        //        }
-        //        else if (i < 8)
-        //        {
-        //            sp2.Children.Add(nouveauBouton);
-        //        }
-        //        else if (i < 12)
-        //        {
-        //            sp3.Children.Add(nouveauBouton);
-        //        }
-        //        else if (i < 16)
-        //        {
-        //            sp4.Children.Add(nouveauBouton);
-        //        }
-        //    }
-        //}
-
+        private void btnRetour_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NavigationService.CanGoBack)
+            {
+                this.NavigationService.GoBack();
+            }
+        }
     }
 }
