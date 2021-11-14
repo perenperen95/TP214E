@@ -70,7 +70,12 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox x:Name="gboBoutons" Header="Inventaire" Grid.Column="0" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="#FF00FF23">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <GroupBox x:Name="gboBoutons" Header="Inventaire" Grid.Column="0" Grid.RowSpan="3" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="#FF00FF23">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"></RowDefinition>
@@ -129,6 +134,8 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
+        <TextBlock Text=" - Double cliquer sur un élément te permet d'avoir un aperçu." Grid.Column="1" Grid.Row="1" Foreground="White"></TextBlock>
+        <TextBlock Text=" - Click droit sur un élément te permet d'ouvrir un menu déroulant." Grid.Column="1" Grid.Row="2" Foreground="White"></TextBlock>
     </Grid>
 
 
