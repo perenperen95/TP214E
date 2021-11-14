@@ -18,7 +18,7 @@ namespace TP214E.Data.Tests
 
             Recette recetteTest = new Recette(nomTest, dictTest, prixTest);
 
-            Assert.Equals(recetteTest.Nom, nomTest);
+            Assert.AreEqual(recetteTest.Nom, nomTest);
         }
 
         [TestMethod()]
@@ -30,7 +30,7 @@ namespace TP214E.Data.Tests
 
             Recette recetteTest = new Recette(nomTest, dictTest, prixTest);
 
-            Assert.Equals(recetteTest.AlimentsQuantites, dictTest);
+            Assert.AreEqual(recetteTest.AlimentsQuantites, dictTest);
         }
 
         [TestMethod()]
@@ -42,7 +42,7 @@ namespace TP214E.Data.Tests
 
             Recette recetteTest = new Recette(nomTest, dictTest, prixTest);
 
-            Assert.Equals(recetteTest.Prix, prixTest);
+            Assert.AreEqual(recetteTest.Prix, prixTest);
         }
 
     }

@@ -14,23 +14,23 @@ namespace TP214E.Data.Tests
         {
             Recette recetteTest = new Recette("tomates en dés", new Dictionary<string, int> { { "tomate", 1 } }, 2);
             Commande maCommande = new Commande();
-            Commande copieCommande = maCommande;
+            Commande maDeuxiemeCommande = new Commande();
 
             maCommande.AjouterItemCommande(recetteTest);
 
-            Assert.IsTrue(maCommande.Total > copieCommande.Total);
+            Assert.IsTrue(maCommande.Total > maDeuxiemeCommande.Total);
         }
 
         [TestMethod()]
-        public void VerifierCountAjouterALaCommandeTest()
+        public void VerifierCompteAjouterALaCommandeTest()
         {
             Recette recetteTest = new Recette("tomates en dés", new Dictionary<string, int> { { "tomate", 1 } }, 2);
             Commande maCommande = new Commande();
-            Commande copieCommande = maCommande;
+            Commande maDeuxiemeCommande = new Commande();
 
             maCommande.AjouterItemCommande(recetteTest);
 
-            Assert.IsTrue(maCommande.Items.Count > copieCommande.Items.Count);
+            Assert.IsTrue(maCommande.Items.Count > maDeuxiemeCommande.Items.Count);
         }
 
         [TestMethod()]
@@ -38,25 +38,23 @@ namespace TP214E.Data.Tests
         {
             Recette recetteTest = new Recette("tomates en dés", new Dictionary<string, int> { { "tomate", 1 } }, 2);
             Commande maCommande = new Commande();
+            Commande maDeuxiemeCommande = new Commande();
             maCommande.AjouterItemCommande(recetteTest);
-            Commande copieCommande = maCommande;
-
             maCommande.RetirerItemCommande(recetteTest);
 
-            Assert.IsTrue(maCommande.Total < copieCommande.Total);
+            Assert.IsTrue(maCommande.Total == maDeuxiemeCommande.Total);
         }
 
         [TestMethod()]
-        public void VerifierCountRetirerDeLaCommandeTest()
+        public void VerifierCompteRetirerDeLaCommandeTest()
         {
             Recette recetteTest = new Recette("tomates en dés", new Dictionary<string, int> { { "tomate", 1 } }, 2);
             Commande maCommande = new Commande();
+            Commande maDeuxiemeCommande = new Commande();
             maCommande.AjouterItemCommande(recetteTest);
-            Commande copieCommande = maCommande;
-
             maCommande.RetirerItemCommande(recetteTest);
 
-            Assert.IsTrue(maCommande.Items.Count < copieCommande.Items.Count);
+            Assert.IsTrue(maCommande.Items.Count == maDeuxiemeCommande.Items.Count);
         }
 
     }
