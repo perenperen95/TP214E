@@ -33,7 +33,6 @@ namespace TP214E.Pages
             _CommandeDAL = new CommandeDAL();
             RecuperationToutesRecettesPossibles();
             RemplirAffichageRecette(_recettesPossibles);
-            //testBoutonsHandlers();
         }
 
         private void RecuperationToutesRecettesPossibles()

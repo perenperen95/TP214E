@@ -30,7 +30,7 @@ namespace TP214E.Data.Tests
 
             Recette recetteTest = new Recette(nomTest, dictTest, prixTest);
 
-            Assert.Equals(recetteTest.AlimentsQuantites, dictTest);
+            Assert.AreEqual(recetteTest.AlimentsQuantites, dictTest);
         }
 
         [TestMethod()]

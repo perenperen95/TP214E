@@ -27,10 +27,11 @@ namespace TP214E.Data.Tests
             Recette recetteTest = new Recette("tomates en dés", new Dictionary<string, int> { { "tomate", 1 } }, 2);
             Commande maCommande = new Commande();
             Commande copieCommande = maCommande;
+            int count = maCommande.Items.Count;
 
             maCommande.AjouterItemCommande(recetteTest);
 
-            Assert.IsTrue(maCommande.Items.Count > copieCommande.Items.Count);
+            Assert.IsTrue(maCommande.Items.Count > count);
         }
 
         [TestMethod()]
@@ -40,6 +41,7 @@ namespace TP214E.Data.Tests
             Commande maCommande = new Commande();
             maCommande.AjouterItemCommande(recetteTest);
             Commande copieCommande = maCommande;
+
 
             maCommande.RetirerItemCommande(recetteTest);
 
